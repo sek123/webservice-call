@@ -1,0 +1,59 @@
+please i need help on sending data to server through soap webservice. the code keeps displaying no coonection.
+
+<!DOCTYPE HTML>
+<html>
+<head>
+
+
+   <meta name="viewport" content="width=default-width; user-scalable=no" />
+   <meta http-equiv="Content-type" content="text/html;charset=utf-8">
+
+   <title>Registration</title>
+
+    <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
+      <script type="text/javascript" charset="utf-8" src="jqm/jquery-2.0.3.min.js"></script>
+	    <!--<script type="text/javascript" charset="utf-8" src="jqm/jquery.mobile-1.4.0.min.css"></script>-->
+		<!--<script type="text/javascript" charset="utf-8" src="jqm/jquery.mobile-1.4.0.min.js"></script>-->
+		
+		<script type="text/javascript" src="js/rayan2.js"></script>
+		<script type="text/javascript" src="js/soapclient.js"></script>
+		
+		</head>
+<body >
+	<div id="reg">
+<h3>New User Registration </h3>
+<form name="myform">
+	<input id="txFullName" type="text" placeholder="Full Name" maxlength="30"><br><br>
+	<input id="txphoneNum" type="number" placeholder="Phone Number" size="11"><br><br>
+	<input id="txemail" type="email"  name="email" placeholder="Email Address" maxlength="50"><br><br>
+	<input id="txpword" type="password" placeholder="Password max length of 4" maxlength="4" ><br><br>
+	<input type="button" value="Submit" id="submit" onClick="callwebserviceUser()"><br><br>
+	<!--<input type="button" value="Submit" id="submit" onClick="validationcheck()"><br><br>onload="onBodyLoad()"-->
+	<input type="button" value="View" onClick="ListDBValues()"> <br><br>
+</form>
+	</div>
+<br>
+<span style="font-weight:bold;">Currently stored values:</span>
+<span id="lbUsers"></span>
+</body>
+</html> 
+
+The jquery-ajax
+
+function callwebserviceUser() {
+var para ={your_name:$('#txFullName').val(), phone_num: $('#txphoneNum').val(),email: $('#txemail').val(),password: $('#txpword').val()};
+ //var para='your_name'+$('#txFullName').val()+'phone_num'+$('#txphoneNum').val()+'email'+ $('#txemail').val()+'password'+$('#txpword').val();
+$.ajax({
+  url:"http://192.168.1.101/web/RayanWebService/RayanSevice.php/UserRegistration",
+  type:"POST",
+  data:para,
+  dataType:"XML",
+  error:function(jqXHR,text_status,strError){
+  alert("No connection");},
+  success:function(data){
+  var i = data;
+  var data_string = JSON.stringify(i);
+                alert(data_string);
+                }
+        });
+}
