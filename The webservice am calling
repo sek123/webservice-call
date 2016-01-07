@@ -1,0 +1,37 @@
+This is the soap webservice written with php.
+
+// server register the  "client registration " function on the web service
+$server->register('UserRegistration',
+array('name'=>'xsd:string','phoneNum'=>'xsd:string','email'=>'xsd:string','password'=>'xsd:string'),
+array('result'=>'xsd:string'/*'tns:UserRegistration'*/),
+$namespace,
+//'rpc',
+'literal',
+'',
+'<p>This allow users to register and save the information into the server database, the password is validated, form fields must not be blank  before returning  a message the user that the registeration is  successful for Rayan application</p>
+<p><strong>INPUT</strong>:$FullName and TYPE is:string,$password and TYPE is:string, $phoneNo and TYPE is: integer, $email and TYPE is:string</p>
+<p><strong>OUTPUT,</strong>:The service returns an array named $person with welcomem note and the name of the user</p>
+<p>if user the not fill the form fields and click on submit the service will return a dialog box telling the user to fill all the field in the form before submiting</p>
+');
+
+
+
+//this registration function for the client
+function UserRegistration($name,$phoneNum,$email,$password){
+//if(!Authentication())
+//return "Invalid id number ";
+				//connect to the database
+$connect=mysql_pconnect("localhost","root","");
+	if($connect){
+		if(mysql_select_db("tuts_rest",$connect)){
+	   $output=mysql_query("INSERT INTO userreg (FullName,PhoneNum,email,password) values('$name','$phoneNum','$email','$password')");
+	   		
+	  		$result="Your Identification number is: ".$phoneNum." password is: ".$password."<br>"." you expected to use it to call the web service some other time ";
+			return $result; 
+		}
+		/*$result=" welcome ".$name." You have successfully register "." Your email is ".$email." Your password is ".$password." and your status is ".$status;
+		return $result;*/
+		
+	}
+		
+}
